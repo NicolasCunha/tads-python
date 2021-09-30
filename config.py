@@ -1,14 +1,19 @@
-# importações 
 from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-import os 
+import os
  
-# configurações 
+# configuracoes
 app = Flask(__name__) 
+
+# flask port
+FLASK_PORT = 5000
+
+# root dir
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # caminho do arquivo de banco de dados 
 path = os.path.dirname(os.path.abspath(__file__))
-DB_FILE = os.path.join(path, 'pessoas.db') 
+DB_FILE = os.path.join(path, 'database.db') 
 
 # sqlalchemy 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+DB_FILE
