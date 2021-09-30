@@ -9,11 +9,8 @@ AVAIABLE_CLASSES = {
     'Pessoa' : Pessoa
 }
 
-def get_avaiable_classes():
-    return [Pessoa.__name__]
-
 def is_avaiable_class(cls):
-    return cls in get_avaiable_classes()
+    return cls in AVAIABLE_CLASSES
 
 def get_class_from_str(str):
     return AVAIABLE_CLASSES[str]
