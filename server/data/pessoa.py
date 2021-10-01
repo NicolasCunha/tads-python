@@ -14,6 +14,7 @@ class Pessoa(db.Model):
     # json serialize
     def to_json(self):
         return {
+            'id' : self.id,
             'nome' : self.nome,
             'email' : self.email,
             'telefone' : self.telefone

@@ -13,8 +13,10 @@ def common_get(classe):
     cls = get_class_from_str(classe)
     result = db.session.query(cls).all()
     result_json = [iterator.to_json() for iterator in result]
+    result_json = jsonify(result_json)
+    result_json.headers.add('Access-Control-Allow-Origin', '*')
 
-    return jsonify(result_json)
+    return result_json
     
 
 app.run(port = FLASK_PORT, debug = True)
