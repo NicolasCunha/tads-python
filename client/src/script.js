@@ -17,7 +17,7 @@ $(function() {
             dataType : 'json',
             contentType : 'application/json',
             data: request,
-            success : load_person_data_to_table,
+            success : get_person_data,
             error : handle_error
         })
 
@@ -36,6 +36,7 @@ $(function() {
     }
 
     function load_person_data_to_table(data) {
+        $("#table-person tr").remove(); 
         for(var i in data){
             reg = '<tr>' 
             +'<td>' + data[i].id + '</td>'
