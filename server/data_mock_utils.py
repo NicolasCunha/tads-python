@@ -6,7 +6,7 @@ from config import *
 
 db.create_all()
 
-for i in range(1, 5):
+for i in range(1, 101):
     gen_name = names.get_full_name()
     gen_email = gen_name.strip() + '@.gmail.com'
     gen_phone = '9'

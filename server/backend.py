@@ -35,5 +35,20 @@ def common_post(classe):
     response.headers.add("Access-Control-Allow-Origin", "*")
     return response
     
+@app.route('/delete/<string:classe>', methods=['delete'])
+def common_delete(classe):
+    if not is_avaiable_class(classe):
+        return classe + ' is not a valid class.'
 
-app.run(port = FLASK_PORT, debug = True)
+    response = jsonify({'resultado': 'ok', 'detalhes': 'ok'})
+    request_json = request.get_json()
+    try:
+        Pessoa.query.filter(Pessoa.id == request_json['id']).delete()
+        db.session.commit()
+    except Exception as e:
+        response = jsonify({'resultado':'erro', 'detalhes':str(e)})
+
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
+
+app.run(port = FLASK_PORT)
