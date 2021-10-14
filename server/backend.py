@@ -1,11 +1,11 @@
 import sys, inspect
 
 from config import app, FLASK_PORT, db
-from flask import Response, jsonify
+from flask import request, Response, jsonify
 from reflection_utils import is_avaiable_class, get_class_from_str
 from data.pessoa import Pessoa
 
-@app.route('/listar/<string:classe>')
+@app.route('/listar/<string:classe>', methods=['get'])
 def common_get(classe):
     if not is_avaiable_class(classe):
         return classe + ' is not a valid class.'
@@ -14,9 +14,26 @@ def common_get(classe):
     result = db.session.query(cls).all()
     result_json = [iterator.to_json() for iterator in result]
     result_json = jsonify(result_json)
-    result_json.headers.add('Access-Control-Allow-Origin', '*')
 
     return result_json
+
+@app.route('/incluir/<string:classe>', methods=['post'])
+def common_post(classe):
+    if not is_avaiable_class(classe):
+        return classe + ' is not a valid class.'
+
+    response = jsonify({'resultado': 'ok', 'detalhes': 'ok'})
+    request_json = request.get_json()
+
+    try:
+        obj = Pessoa(**request_json)
+        db.session.add(obj)
+        db.session.commit()
+    except Exception as e:
+        response = jsonify({'resultado':'erro', 'detalhes':str(e)})
+
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    return response
     
 
 app.run(port = FLASK_PORT, debug = True)

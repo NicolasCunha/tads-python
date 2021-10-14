@@ -1,9 +1,13 @@
-from flask import Flask, render_template
+from flask import Flask
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 import os
  
 # configuracoes
 app = Flask(__name__) 
+
+# apply CORS
+CORS(app)
 
 # flask port
 FLASK_PORT = 5000

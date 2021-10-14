@@ -4,31 +4,75 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <!-- JQuery CDN -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     <title>Sistema</title>
   </head>
   <body>
     <h1>Sistema</h1>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mt-2"> 
+      <div class="collapse navbar-collapse" id="navbarSupportedContent"> 
+        <div class="navbar-nav mr-auto"> 
+          <a class="nav-item nav-link" href="#" id="btn-load-person-table">Listar</a>
+          <a class="nav-item nav-link" data-toggle="modal" data-target="#modal-include-person" href="#">Incluir</a> 
+        </div>
+      </div>
+    </nav>
     <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nome</th>
-                <th>E-mail</th>
-                <th>Telefone</th>
-            </tr>
-        </thead>
-        <tbody id="tblPessoa">
-
-        </tbody>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Telefone</th>
+        </tr>
+      </thead>
+      <tbody id="table-person">
+      </tbody>
     </table>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-W8fXfP3gkOKtndU4JGtKDvXbO53Wy8SZCQHczT5FMiiqmQfUpWbYdTil/SxwZgAN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.min.js" integrity="sha384-skAcpIdS7UcVUC05LJ9Dxay8AXcDYfBJqt1CJ85S/CFujBsIzCIv+l9liuYLaMQ/" crossorigin="anonymous"></script>
+    <div id="modal-include-person" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Nova Pessoa</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label for="person-name">Nome</label>
+                    <input type="text" class="form-control" id="person-name"
+                        aria-describedby="nomeHelp" placeholder="Nome">
+                    <small id="nomeHelp" class="form-text text-muted">Informe o seu nome completo, sem
+                        abreviações.</small>
+                </div>
+                <div class="form-group">
+                    <label for="person-email">Email</label>
+                    <input type="email" class="form-control" id="person-email"
+                        aria-describedby="emailHelp" placeholder="Email">
+                    <small id="emailHelp" class="form-text text-muted">Seu email será 
+                        utilizado apenas para contato em nosso sistema.</small>
+                </div>
+                <div class="form-group">
+                    <label for="person-phone">Telefone</label>
+                    <input type="tel" class="form-control" id="person-phone"
+                        aria-describedby="telefoneHelp" placeholder="Telefone">
+                    <small id="telefoneHelp" class="form-text text-muted">Informe com DDD.</small>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button id="btn-include-person" type="button" class="btn btn-primary">Incluir</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="src/script.js"></script>
   </body>
 </html>
