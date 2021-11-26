@@ -1,8 +1,13 @@
 from config import app, db
 
-from flask import request, Response, jsonify
+from flask import request
 
 from model.user import User
+
+from utils.string_utils import str_empty
+from utils.http_utils import create_response
+
+from service.user_service import user_exists, create_user
 
 HTTP_OK = 200
 HTTP_ERR = 500
@@ -13,14 +18,23 @@ def login():
 
     user_login = str(request_data['login'])
     user_pwd = str(request_data['pwd'])
+
+    response = {};
+    response["login_ok"] = False
     
     if str_empty(user_login):
-        return create_response("User login can't be empty", HTTP_ERR)
+        response["msg"] = "User login can't be empty"
+        return create_response(response, HTTP_ERR)
     
     if str_empty(user_pwd):
-        return create_response("User password can't be empty", HTTP_ERR)
+        response["msg"] = "User password can't be empty"
+        return create_response(response, HTTP_ERR)
 
-    return create_response('OK', HTTP_OK)
+    user = db.session.query(User).filter(User.login == user_login).filter(User.pwd == user_pwd).all()
+
+    response["login_ok"] = True if user else False
+
+    return create_response(response, HTTP_OK)
 
 @app.route('/user/signup', methods=['post'])
 def signup():
@@ -31,26 +45,29 @@ def signup():
     email = str(request_data['email'])
     name = str(request_data['name'])
 
-    user = User(login, pwd, email, person_name=name)
+    response = {}
+    response["signup_ok"] = False
 
-    db.session.add(user)
-    db.session.commit()
+    result = user_exists(login, email)
 
-    return create_response('OK', HTTP_OK)
+    if not result["status"]:
+        if result["msg"]:
+            response["msg"] = result["msg"]
+        else:
+            response["msg"] = "Email {email} or user {user} already exists".format(user=login, email=email)
+        
+        print(result)
+        return create_response(response, HTTP_OK)
+    
+    result = create_user(login, pwd, email, name)
 
-def create_response(msg, status):
-    response = jsonify({'msg':msg})
-    response.status = status
-    response.headers.add("Access-Control-Allow-Origin", "*")
-    return response
+    if result["status"]:
+        response["signup_ok"] = True
+    else:
+        response["msg"] = result["msg"]
 
-def str_empty(arg):
-    try:
-        if arg and arg.strip():
-            #is not None AND myString is not empty or blank
-            return False
-        return True
-    except Exception as e:
-        return True
+    return create_response(response, HTTP_OK)
+
+
     
 
