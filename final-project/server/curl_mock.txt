@@ -1,5 +1,0 @@
-## /user/signup/ endpoint
-curl -d '{"login":"nfcunha", "pwd":"senha123", "email":"nicolascunha@gmail.com", "name":"Nicolas Cunha"}' -H "Content-Type: application/json" -X POST http://localhost:5000/user/signup
-
-## /user/login/ endpoint
-curl -d '{"login":"nfcunha", "pwd":"senha123", "email":"nicolascunha@gmail.com", "name":"Nicolas Cunha"}' -H "Content-Type: application/json" -X POST http://localhost:5000/user/login
